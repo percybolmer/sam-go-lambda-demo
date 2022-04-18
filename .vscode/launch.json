@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "sam-demo:SQSLambda",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "${workspaceFolder}/template.yml",
+                "logicalId": "SQSLambda"
+            },
+            "lambda": {
+                "environmentVariables": {}
+            },
+            "sam": {
+                "dockerNetwork": "aws-mock-network"
+            }
+        },
+        {
+            "name": "Debug with Sam",
+            "type": "go",
+            "request": "attach",
+            "mode": "remote",
+            "port": 8099,
+            "host": "localhost"
+        }
+    ]
+}

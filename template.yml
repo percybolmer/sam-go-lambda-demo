@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Demo of Sam
+
+  We try out SAM
+
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  HelloGopher:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: ./
+        Handler: hello-gopher
+        Runtime: go1.x
+        Environment:
+          Variables:
+            my-cool-variable: "maybe-not-so-cool"
+        Architectures:
+          - x86_64
+        Events:
+          HelloEndPoint:
+            Type: Api
+            Properties:
+              Path: '/api/hellogopher'
+              Method: post
+  SQSLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./sqslambda
+      Handler: sqs-lambda
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Events:
+        SqsEvents:
+          Type: SQS
+          Properties:
+            Queue: "my-awesome-queue"
